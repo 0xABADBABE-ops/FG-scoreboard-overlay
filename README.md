@@ -71,6 +71,60 @@ ScoreBoard           |  ScoreBoard + Teamnbattle       | ScoreBoard & Winner Dis
 
 >🛑Important :To remove the logo at the bottom, erase the logo png files.Additionally, you can replace them with your own logo with same dimension
 
+# Customize
+This section will assist you in adding or removing a logo as well as making minor adjustments to text color, opacity, logo size, and logo animation duration. Some text editing (modifying code) required for this.
+
+>🛑 All 3 layouts have their own separate files, so make sure you are editing stuff for the right layout/folder.
+
+## 1. editing Text colors , logo size and logo opaicty . 
+* This can be done by editing CSS file genrally located at ``Css/Style.css``.
+
+* 1> open ``Style.css`` in any text editor ``FG-scoreboard-overlay-main\scoreboard only\Css\Style.css``
+* 2> edit text as show in image.
+
+* 3> Example 1- changing logo opacity edit value of ``--logo-opacity: 1`` (set it to 1 for max opacity)
+
+* 4> Example 2- changing player name text color edit value of ``--playername-color: red`` [color values takes css predefined colorname like ``lightgrey``  or ``rgb(255,255,255)``->rgb(red,green,blue).]
+
+* 5>Save the file
+
+<img src="Screenshot/editss1.png" alt="sc" style="border: 4px solid blue;">
+
+## 2. Changing , logo animation and transition duration . 
+* This can be done by editing Javascript file genrally located at ``js/ScoreBoard.js``.
+
+* 1> open ``ScoreBoard.js`` in any text editor ``FG-scoreboard-overlay-main\scoreboard only\js\ScoreBoard.js``
+
+* 2> edit text as show in image.
+
+* 3> Example 1- changing duration logo stay on screen before transition to next logo  edit value of ``logo_duration=5`` (logo appear for 5sec before transitioning into next logo)
+
+* 4> Example 2- changing fade-in and fade-out duration edit value of ``logo_trasition_duration=2``(trasition takes 2 sec to fade in and 2 sec to fade out)
+
+* 5>Save the file
+
+<img src="Screenshot/editss2.png" alt="sc" style="border: 4px solid blue;">
+
+## 2. Removing,Adding Logos .
+
+> ### 🛑 Do not delete ``logo.png`` files from ``\ImageBackground\logo`` it will break overlay doing Following method is right way to delete or change logo
+
+> ### ⭕ Tamplate code for logo -> ```<img id="logo{x}" class="logos" src="./ImageBackground/logo/logo{X}.png " onerror="this.style.display = 'none'">```⭕ replace{x}with logo number
+
+* this can be done by editing HTML file genrally located at ``ScoreBoard.html``.
+> 
+* 1> open ``ScoreBoard.html`` in any text editor ``FG-scoreboard-overlay-main\scoreboard only\ScoreBoard.html``
+
+* 2> edit text as show in image.
+
+* 3> Example 1- Adding more logo(adding logo 4). this can be by adding this line of code ```<img id="logo4" class="logos" src="./ImageBackground/logo/logo4.png " onerror="this.style.display = 'none'">```inside logowrapper as shown in image.
+
+* 4> Example 2- Removing All logo(no logo at bottom of screen). this can be by removing  line of code inside logowrapper(remove all ```<img id="logo1"....>```,```<img id="logo2"....>```,```<img id="logo3"....>```.....```<img id="logoN"....>```)
+
+* 5>Save the file
+
+<img src="Screenshot/editss3.png" alt="sc" style="border: 4px solid blue;">
+
 
 
 ## Thankyou

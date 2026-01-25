@@ -1,5 +1,9 @@
+const logo_duration=3;                  //Duration logo appear before trasition to next logo in sec
+const logo_trasition_duration=2;       // trastion duration for bith fade in fade out in sec
+const logo_cycle_duration=10;          // time gap between logo cycles in sec
 
 window.onload=init;                               // When the window finishes loading, the init function is executed
+
 
 
 
@@ -200,7 +204,7 @@ function init(){              // Main initialization function
 
  startlive();   // Start live updates for the game state
  setInterval(startlive,500);  // Set interval to repeatedly fetch and update the game state every 500ms
- logoloop();  // Call the logo loop animation function
+   // Call the logo loop animation function
 
  
 
@@ -304,69 +308,51 @@ function resizeTextToFitround(element) {
     element.style.fontSize = `${fontSize}px`;
 }
 
-
 // Function to handle the animation loop for logos
 function logoloop(){
-    var countlogo = document.getElementById( 
-        'logowrapper').childElementCount; 
+    const wrapper = document.getElementById("logowrapper");
+    if (!wrapper) return; // Exit if wrapper doesn't exist
 
-    
-// If there is more than one logo
-if(countlogo>1){
-    const logoimg = document.getElementById('P1wrapper');
-    var logo = gsap.timeline({repeat: -1, repeatDelay: 8});
+    const logos = wrapper.querySelectorAll("img"); // all images inside
+    if (logos.length === 0) return; // Exit if there are no <img> tags
 
-     // Loop through each logo and animate its opacity
-    for (var i = 1; i <= countlogo; i++) {
-        idlogo="#logo" + i;
+    const validLogos = [];
 
+    // Check which images actually loaded
+    logos.forEach((img) => {
+        if (img.complete && img.naturalWidth !== 0) {
+            validLogos.push(img);
+        } else {
+            img.style.display = "none"; // hide broken images
+        }
+    });
 
-         // Animate logo appearance
-        logo.from(idlogo, 
-            {opacity: 0, 
-            duration: 3,
-            ease: "power1.in",
+    // Exit if no valid images to animate
+    if (validLogos.length === 0) return;
+
+    const logoTimeline = gsap.timeline({
+        repeat: -1,
+        repeatDelay: logo_cycle_duration
+    });
+
+    validLogos.forEach((img) => {
+        logoTimeline.from(img, {
+            opacity: 0,
+            duration: logo_trasition_duration,
+            ease: "power1.in"
         });
 
-        
-            
-// Animate logo disappearance after a delay
-        logo.to(idlogo, 
-    {opacity: 0, 
-    duration: 3,
-    delay:2,
-    ease: "power1.out"});
-
-    
-      }
-
-
-
-
+        logoTimeline.to(img, {
+            opacity: 0,
+            duration: logo_trasition_duration,
+            delay: logo_duration,
+            ease: "power1.out"
+        });
+    });
 }
-   
-
-else{ // If there's only one logo
-
-    
-         // Animate single logo
-        tloop.from("#logowrapper9", 
-            {opacity: 0, 
-            duration: 3,
-            ease: "power1.in"});
-            
- // Animate logo disappearance after a delay
-        tloop.to("#logowrapper9", 
-    {opacity: 0, 
-    duration: 3,
-    delay:2,
-    ease: "power1.out"});
-
-    }
+logoloop();
 
 
-
-}
 
 
  //----------github.com/Y3S99-------------

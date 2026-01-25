@@ -1,3 +1,6 @@
+const logo_duration=3;                  //Duration logo appear before trasition to next logo in sec
+const logo_trasition_duration=2;       // trastion duration for bith fade in fade out in sec
+const logo_cycle_duration=10;          // time gap between logo cycles in sec
 
 window.onload=init;         // When the window finishes loading, the init function is executed
 
@@ -101,6 +104,12 @@ function init(){        // Main initialization function
                         t2m1element.innerHTML=t2m1;
                         t2m2element.innerHTML=t2m2;
                         t2m3element.innerHTML=t2m3;
+                        resizeTextToFitTB(t1m1element);
+                        resizeTextToFitTB(t1m2element);
+                        resizeTextToFitTB(t1m3element);
+                        resizeTextToFitTB(t2m1element);
+                        resizeTextToFitTB(t2m2element);
+                        resizeTextToFitTB(t2m3element);
 
                         teammemberflagcheck();            //check for all member elemination status
                      
@@ -264,6 +273,13 @@ function init(){        // Main initialization function
                               t2m1element.innerHTML=t2m1;
                               t2m2element.innerHTML=t2m2;
                               t2m3element.innerHTML=t2m3;
+                              resizeTextToFitTB(t1m1element);
+                              resizeTextToFitTB(t1m2element);
+                              resizeTextToFitTB(t1m3element);
+                              resizeTextToFitTB(t2m1element);
+                              resizeTextToFitTB(t2m2element);
+                              resizeTextToFitTB(t2m3element);
+                        
                               teambattlestartupanimation();
                               tbstartup=false;}
 
@@ -428,7 +444,7 @@ function init(){        // Main initialization function
             function teammemberflagcheck(){        // team member elimination flag check
                 if(t1m1flag==1){
                     t1m1flagelement.src="./ImageBackground/Teambattle/L1green.png"                //change singnal image
-                    t1m1element.style.color = 'white';                                  //change text color
+                    t1m1element.style.color = "white";                                  //change text color
             
                 }
                 if(t1m1flag==0){
@@ -501,7 +517,7 @@ function init(){        // Main initialization function
 
  startlive();             // Start live updates for the game state
  setInterval(startlive,500);              // Set interval to repeatedly fetch and update the game state every 500ms
- logoloop();  // Call the logo loop animation function
+
 
 
 
@@ -669,66 +685,89 @@ function teambattlestartupanimation(){   // Function to handle startup animation
 
 // Function to handle the animation loop for logos
 function logoloop(){
-    var countlogo = document.getElementById( 
-        'logowrapper').childElementCount; 
+const wrapper = document.getElementById("logowrapper");
+    const logos = wrapper.querySelectorAll("img"); // all images inside
+    const validLogos = [];
 
-    
-// If there is more than one logo
-if(countlogo>1){
-    const logoimg = document.getElementById('P1wrapper');
-    var logo = gsap.timeline({repeat: -1, repeatDelay: 8});
+    // Check which images actually loaded
+    logos.forEach((img) => {
+        if (img.complete && img.naturalWidth !== 0) {
+            validLogos.push(img);
+        } else {
+            img.style.display = "none"; // hide broken images
+        }
+    });
 
-     // Loop through each logo and animate its opacity
-    for (var i = 1; i <= countlogo; i++) {
-        idlogo="#logo" + i;
+    // If more than one valid logo
 
 
-         // Animate logo appearance
-        logo.from(idlogo, 
-            {opacity: 0, 
-            duration: 3,
-            ease: "power1.in",
+        const logoTimeline = gsap.timeline({
+            repeat: -1,
+            repeatDelay: 8
         });
 
-        
-            
-// Animate logo disappearance after a delay
-        logo.to(idlogo, 
-    {opacity: 0, 
-    duration: 3,
-    delay:2,
-    ease: "power1.out"});
+        validLogos.forEach((img) => {
+
+            logoTimeline.from(img, {
+                opacity: 0,
+                duration: 3,
+                ease: "power1.in"
+            });
+
+            logoTimeline.to(img, {
+                opacity: 0,
+                duration: 3,
+                delay: 2,
+                ease: "power1.out"
+            });
+
+        });
 
     
-      }
 
+}function logoloop(){
+    const wrapper = document.getElementById("logowrapper");
+    if (!wrapper) return; // Exit if wrapper doesn't exist
 
+    const logos = wrapper.querySelectorAll("img"); // all images inside
+    if (logos.length === 0) return; // Exit if there are no <img> tags
 
+    const validLogos = [];
 
+    // Check which images actually loaded
+    logos.forEach((img) => {
+        if (img.complete && img.naturalWidth !== 0) {
+            validLogos.push(img);
+        } else {
+            img.style.display = "none"; // hide broken images
+        }
+    });
+
+    // Exit if no valid images to animate
+    if (validLogos.length === 0) return;
+
+    const logoTimeline = gsap.timeline({
+        repeat: -1,
+        repeatDelay: logo_cycle_duration
+    });
+
+    validLogos.forEach((img) => {
+        logoTimeline.from(img, {
+            opacity: 0,
+            duration: logo_trasition_duration,
+            ease: "power1.in"
+        });
+
+        logoTimeline.to(img, {
+            opacity: 0,
+            duration: logo_trasition_duration,
+            delay: logo_duration,
+            ease: "power1.out"
+        });
+    });
 }
-   
+logoloop();// Call the logo loop animation function
 
-else{ // If there's only one logo
-
-    
-         // Animate single logo
-        tloop.from("#logowrapper9", 
-            {opacity: 0, 
-            duration: 3,
-            ease: "power1.in"});
-            
- // Animate logo disappearance after a delay
-        tloop.to("#logowrapper9", 
-    {opacity: 0, 
-    duration: 3,
-    delay:2,
-    ease: "power1.out"});
-
-    }
-
-
-
-}
 
 
 

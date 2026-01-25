@@ -334,6 +334,24 @@ const character={
       "line": "Are",
       "origin": "Grand Duchy of Rosaria",
       "rageart": " Hellfire"
+      },
+
+      "Fahkumram": {
+      "name": "Fahkumram",
+      "fullname": "Fahkumram",
+      "aka": "Resurrected King of Iron Fist",
+      "line": "Are",
+      "origin": "Grand Duchy of Rosaria",
+      "rageart": " Hellfire"
+      },
+
+      "Anna": {
+      "name": "Anna",
+      "fullname": "Anna Williams",
+      "aka": "Resurrected King of Iron Fist",
+      "line": "Are",
+      "origin": "Grand Duchy of Rosaria",
+      "rageart": " Hellfire"
       }
       
 }
